@@ -1,0 +1,6 @@
+interface Menu {
+
+    fun  titlePrintMenu()
+
+
+}
