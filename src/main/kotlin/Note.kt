@@ -2,8 +2,7 @@ import java.util.Scanner
 
 class Note
     (
-    private var commandNote: Int,
-    private val noteListNew: MutableList<MutableList<String>>,
+    private val noteList: MutableList<NoteCreate>,
     ) : Menu {
 
     private val scan = Scanner(System.`in`)
@@ -23,39 +22,41 @@ class Note
                             scan.nextLine()
 
                             var scanNameNote = scan.nextLine()
-                            while (scanNameNote.isEmpty()) {
-                                println("Имя не пожет быть пустым. Повторите ввод:")
-                                scanNameNote = scan.nextLine()
-                            }
 
-                            val noteCreate = NoteCreate(scanNameNote)
+                                while (scanNameNote.isEmpty()) {
+                                    println("Имя заметки не пожет быть пустым. Повторите ввод:")
+                                    scanNameNote = scan.nextLine()
+                                }
 
-                            noteListNew[commandNote-1].add(noteCreate.titleNote)
+                            println("Введите текст заметки")
+                            var scanTextNote = scan.nextLine()
+
+                                while (scanTextNote.isEmpty()) {
+                                    println("Текст заметки не пожет быть пустым. Повторите ввод:")
+                                    scanTextNote = scan.nextLine()
+                                }
+
+                            noteList.add(NoteCreate(scanNameNote, scanTextNote))
 
                             titlePrintMenu()
-
                         }
 
-
-                        in (noteListNew[commandNote-1].indices + noteListNew[commandNote-1].size) -> {
-                            println("Заметка $commandMenuNote")
-                            println("Я тут")
-                            println("${noteListNew[commandNote-1].size+1}. Выход")
-                        }
-
-
-                        noteListNew[commandNote-1].size+1 -> {
+                        noteList.size+1 -> {
                             println("Выход...")
                             println(" ")
                             break
                         }
 
+                        in (noteList.indices + noteList.size) -> {
+                            println("Заметка: ${noteList[commandMenuNote-1].titleNote}")
+                            println(noteList[commandMenuNote-1].textNote)
+                            titlePrintMenu()
+                        }
 
                         else -> println("Такой цифры нет, повторите ввод")
 
                     }
                 } else {
-                    println(" ")
                     println("Вы ввели не число, попробуйте снова!")
                     scan.next()
                 }
@@ -66,14 +67,13 @@ class Note
 
         override fun titlePrintMenu() {
             println(
-                """                         
-                            Архив № $commandNote
+                """                                                 
                             Список заметок:
                             0. Создать заметку
                         """.trimIndent()
             )
-            noteListNew[commandNote-1].forEachIndexed{ index, element -> println("${index + 1}. $element")}
-            println("${noteListNew[commandNote-1].size+1}. Выход")
+            noteList.forEachIndexed{ index, noteCreate -> println("${index + 1}. ${noteCreate.titleNote}")}
+            println("${noteList.size+1}. Выход")
         }
 
 }

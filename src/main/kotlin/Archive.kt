@@ -2,66 +2,59 @@ import java.util.Scanner
 
 class Archive : Menu {
 
-    private val scan = Scanner(System.`in`)
-    private val archiveList: MutableList<String> = mutableListOf()
-    private val noteList: MutableList<MutableList<String>> = mutableListOf()
+    private val scanner = Scanner(System.`in`)
+    private val archiveList : MutableList <ArchiveCreate> = mutableListOf()
 
     fun startArchive() {
 
         titlePrintMenu()
 
-        while (true) {
+            while (true) {
 
-            if (scan.hasNextInt()) {
+                if (scanner.hasNextInt()) {
 
-                when (val commandMenuArchive = scan.nextInt()) {
-                    0 -> {
-                        println("Введите имя архива:")
-                        scan.nextLine()
+                    when (val commandMenuArchive = scanner.nextInt()) {
 
-                        var scanNameArchives = scan.nextLine()
+                        0 -> {
+                            println("Введите имя архива:")
+                            scanner.nextLine()
+
+                            var scanNameArchives = scanner.nextLine()
 
                             while (scanNameArchives.isEmpty()) {
                                 println("Имя не пожет быть пустым. Повторите ввод:")
-                                scanNameArchives = scan.nextLine()
+                                scanNameArchives = scanner.nextLine()
                             }
 
-                        val archiveCreate = ArchiveCreate(scanNameArchives)
+                            archiveList.add(ArchiveCreate(scanNameArchives))
 
-                        archiveList.add(archiveCreate.titleArchive)     //записываю имена архивов в archiveList
-                        noteList.add(archiveCreate.numberNoteList)  //записываю листы заметок в лист noteList
+                            titlePrintMenu()
+                        }
 
-                        titlePrintMenu()
+                        archiveList.size + 1 -> {
+                            println("Выход...")
+                            return
+                        }
+
+                        in (archiveList.indices + archiveList.size) -> {
+
+                            val note = Note(noteList = archiveList[commandMenuArchive-1].numberNoteList)
+                            println("Архив: ${archiveList[commandMenuArchive-1].titleArchive}")
+
+                            note.startNote()
+                            titlePrintMenu()
+                        }
+
+                        else -> println("Такой цифры нет, повторите ввод")
+
                     }
 
-
-                    archiveList.size + 1 -> {
-                        println("Выход из приложения...")
-                        return
-                    }
-
-
-                    in (archiveList.indices + archiveList.size) -> {    //проблема, что начинается с 0 индексы, поэтому добавил archiveList.size
-
-                        val note = Note (commandMenuArchive, noteList)
-
-                        note.startNote()
-                        titlePrintMenu()
-                    }
-
-
-                    else -> println("Такой цифры нет, повторите ввод")
+                } else {
+                    println("Вы ввели не число, попробуйте снова!")
+                    scanner.next()
                 }
-
             }
-            else {
-                println(" ")
-                println("Вы ввели не число, попробуйте снова!")
-                scan.next()
-            }
-        }
     }
-
 
 
     override fun titlePrintMenu() {
@@ -70,8 +63,7 @@ class Archive : Menu {
             0. Создать архив                      
         """.trimIndent())
 
-        archiveList.forEachIndexed{ index, element -> println("${index + 1}. $element")}
+        archiveList.forEachIndexed { index, archiveCreate ->  println("${index + 1}. ${archiveCreate.titleArchive}")}
         println("${archiveList.size+1}. Выход")
     }
-
 }

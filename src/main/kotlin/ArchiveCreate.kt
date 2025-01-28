@@ -1,4 +1,4 @@
-class ArchiveCreate (
-    val titleArchive: String,
-    val numberNoteList: MutableList <String> = mutableListOf(),
+data class ArchiveCreate (
+    var titleArchive: String,
+    val numberNoteList: MutableList <NoteCreate> = mutableListOf(),
     )

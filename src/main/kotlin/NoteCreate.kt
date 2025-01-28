@@ -1,4 +1,4 @@
-class NoteCreate (
-    val titleNote: String,
-    val textNote: String = "",
+data class NoteCreate (
+    var titleNote: String,
+    var textNote: String,
 )
