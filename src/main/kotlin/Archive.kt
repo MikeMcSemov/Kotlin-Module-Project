@@ -21,7 +21,7 @@ class Archive : Menu {
 
                             var scanNameArchives = scanner.nextLine()
 
-                            while (scanNameArchives.isEmpty()) {
+                            while (scanNameArchives.trim().isEmpty()) {
                                 println("Имя не пожет быть пустым. Повторите ввод:")
                                 scanNameArchives = scanner.nextLine()
                             }

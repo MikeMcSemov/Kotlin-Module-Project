@@ -23,7 +23,7 @@ class Note
 
                             var scanNameNote = scan.nextLine()
 
-                                while (scanNameNote.isEmpty()) {
+                                while (scanNameNote.trim().isEmpty()) {
                                     println("Имя заметки не пожет быть пустым. Повторите ввод:")
                                     scanNameNote = scan.nextLine()
                                 }
@@ -31,7 +31,7 @@ class Note
                             println("Введите текст заметки")
                             var scanTextNote = scan.nextLine()
 
-                                while (scanTextNote.isEmpty()) {
+                                while (scanTextNote.trim().isEmpty()) {
                                     println("Текст заметки не пожет быть пустым. Повторите ввод:")
                                     scanTextNote = scan.nextLine()
                                 }
@@ -75,5 +75,4 @@ class Note
             noteList.forEachIndexed{ index, noteCreate -> println("${index + 1}. ${noteCreate.titleNote}")}
             println("${noteList.size+1}. Выход")
         }
-
 }
